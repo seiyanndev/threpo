@@ -1,0 +1,131 @@
+{
+  "name": "threpo",
+  "displayName": "Threpo",
+  "description": "Create GitHub repositories and publish local folders to them from a VS Code sidebar panel.",
+  "version": "0.1.0",
+  "publisher": "pixelhive",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "keywords": [
+    "github",
+    "repository",
+    "create repo",
+    "publish"
+  ],
+  "main": "./extension.js",
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "threpo",
+          "title": "Threpo",
+          "icon": "media/threpo.svg"
+        }
+      ]
+    },
+    "views": {
+      "threpo": [
+        {
+          "type": "webview",
+          "id": "threpo.sidebar",
+          "name": "GitHub Repositories"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "threpo.createRepo",
+        "title": "Create GitHub Repository",
+        "category": "Threpo",
+        "icon": "$(repo-create)"
+      },
+      {
+        "command": "threpo.publishFolder",
+        "title": "Publish Folder to New GitHub Repository",
+        "category": "Threpo",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "threpo.refresh",
+        "title": "Refresh",
+        "category": "Threpo",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "threpo.switchAccount",
+        "title": "Switch GitHub Account",
+        "category": "Threpo",
+        "icon": "$(account)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "threpo.refresh",
+          "when": "view == threpo.sidebar",
+          "group": "navigation@1"
+        },
+        {
+          "command": "threpo.switchAccount",
+          "when": "view == threpo.sidebar",
+          "group": "navigation@2"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "threpo.publishFolder",
+          "when": "explorerResourceIsFolder",
+          "group": "7_modification@9"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Threpo",
+      "properties": {
+        "threpo.defaultVisibility": {
+          "type": "string",
+          "enum": [
+            "private",
+            "public"
+          ],
+          "default": "private",
+          "description": "Visibility preselected in the form."
+        },
+        "threpo.defaultOwner": {
+          "type": "string",
+          "default": "",
+          "description": "Organization preselected as owner. Leave empty for your personal account."
+        },
+        "threpo.initializeWithReadme": {
+          "type": "boolean",
+          "default": true,
+          "description": "Preselect \"Add a README\" when creating an empty repository."
+        },
+        "threpo.defaultGitignore": {
+          "type": "string",
+          "default": "",
+          "description": "Gitignore template preselected in the form, e.g. \"Node\" or \"WordPress\"."
+        },
+        "threpo.defaultLicense": {
+          "type": "string",
+          "default": "",
+          "description": "License key preselected in the form, e.g. \"mit\"."
+        },
+        "threpo.commitMessage": {
+          "type": "string",
+          "default": "Initial commit",
+          "description": "Commit message used when publishing a folder that has no commits yet."
+        }
+      }
+    }
+  }
+}
